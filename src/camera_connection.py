@@ -74,7 +74,8 @@ def point_cloud_callback(color_msg, depth_msg, publisher):
     point_cloud_msg = pc2.create_cloud_xyz32(header, points_array)
 
     # Publish the PointCloud2 message
-    publisher.publish(point_cloud_msg)
+    # publisher.publish(point_cloud_msg)
+    
     depth_images = []
     # Save point cloud as .ply file if record key is pressed
     global record_pressed
@@ -88,12 +89,12 @@ def point_cloud_callback(color_msg, depth_msg, publisher):
 
         if len(depth_values) != 0:
 
-            depth_values = np.array(depth_values) / 1000.0  # Convert mm to meters
+            depth_values = np.array(depth_values)   # Convert mm to meters
 
             # Convert pixel coordinates to world coordinates
             x = (u - 320) * depth_values / 570
             y = (v - 240) * depth_values / 570
-            z = depth_values
+            z = depth_values 
 
             # Accumulate points
             points_array = np.vstack((x, y, z)).T.astype(np.float32)
